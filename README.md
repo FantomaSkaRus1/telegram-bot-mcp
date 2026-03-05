@@ -3,6 +3,10 @@
 Full-featured Telegram Bot API server for MCP (Model Context Protocol).
 **174 tools** covering the entire Bot API — messages, chats, stickers, payments, forums, stories, and more.
 
+<a href="https://glama.ai/mcp/servers/@FantomaSkaRus1/telegram-bot-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@FantomaSkaRus1/telegram-bot-mcp/badge" alt="telegram-bot-mcp MCP server" />
+</a>
+
 ## Features
 
 - **Messages** — send (text, photo, video, audio, document, location, poll, dice, sticker, media groups), edit, forward, copy, delete, pin/unpin, reactions
