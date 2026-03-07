@@ -26,8 +26,9 @@ export function registerMessageSendTools(server) {
         .describe("Topic/thread ID for supergroups with topics enabled"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup (inline keyboard, custom keyboard, etc.)"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, text, parse_mode, entities, link_preview_options, disable_notification, protect_content, message_thread_id, reply_parameters, reply_markup }) => {
+    async ({ chat_id, text, parse_mode, entities, link_preview_options, disable_notification, protect_content, message_thread_id, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
         const params = { chat_id: resolveChatId(chat_id), text };
@@ -39,6 +40,7 @@ export function registerMessageSendTools(server) {
         if (resolvedThreadId) params.message_thread_id = resolvedThreadId;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendMessage", params);
         return ok(`Message sent! ID: ${result.message_id}\n\n${formatResult(result)}`);
       } catch (e) {
@@ -67,8 +69,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, photo, caption, parse_mode, caption_entities, show_caption_above_media, has_spoiler, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, photo, caption, parse_mode, caption_entities, show_caption_above_media, has_spoiler, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolved = resolveChatId(chat_id);
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
@@ -87,6 +90,7 @@ export function registerMessageSendTools(server) {
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
 
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = isFile
           ? await tgUpload("sendPhoto", photo, "photo", params)
           : await tgCall("sendPhoto", params);
@@ -117,8 +121,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, document, caption, parse_mode, caption_entities, disable_content_type_detection, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, document, caption, parse_mode, caption_entities, disable_content_type_detection, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
         const isFile = isFilePath(document);
@@ -135,6 +140,7 @@ export function registerMessageSendTools(server) {
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
 
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = isFile
           ? await tgUpload("sendDocument", document, "document", params)
           : await tgCall("sendDocument", params);
@@ -170,8 +176,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, video, caption, parse_mode, caption_entities, show_caption_above_media, duration, width, height, supports_streaming, has_spoiler, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, video, caption, parse_mode, caption_entities, show_caption_above_media, duration, width, height, supports_streaming, has_spoiler, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolved = resolveChatId(chat_id);
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
@@ -194,6 +201,7 @@ export function registerMessageSendTools(server) {
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
 
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = isFile
           ? await tgUpload("sendVideo", video, "video", params)
           : await tgCall("sendVideo", params);
@@ -226,8 +234,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, audio, caption, parse_mode, caption_entities, duration, performer, title, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, audio, caption, parse_mode, caption_entities, duration, performer, title, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolved = resolveChatId(chat_id);
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
@@ -247,6 +256,7 @@ export function registerMessageSendTools(server) {
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
 
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = isFile
           ? await tgUpload("sendAudio", audio, "audio", params)
           : await tgCall("sendAudio", params);
@@ -277,8 +287,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, voice, caption, parse_mode, caption_entities, duration, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, voice, caption, parse_mode, caption_entities, duration, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolved = resolveChatId(chat_id);
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
@@ -296,6 +307,7 @@ export function registerMessageSendTools(server) {
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
 
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = isFile
           ? await tgUpload("sendVoice", voice, "voice", params)
           : await tgCall("sendVoice", params);
@@ -330,8 +342,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, animation, caption, parse_mode, caption_entities, show_caption_above_media, duration, width, height, has_spoiler, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, animation, caption, parse_mode, caption_entities, show_caption_above_media, duration, width, height, has_spoiler, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolved = resolveChatId(chat_id);
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
@@ -353,6 +366,7 @@ export function registerMessageSendTools(server) {
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
 
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = isFile
           ? await tgUpload("sendAnimation", animation, "animation", params)
           : await tgCall("sendAnimation", params);
@@ -380,8 +394,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, video_note, duration, length, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, video_note, duration, length, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolved = resolveChatId(chat_id);
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
@@ -397,6 +412,7 @@ export function registerMessageSendTools(server) {
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
 
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = isFile
           ? await tgUpload("sendVideoNote", video_note, "video_note", params)
           : await tgCall("sendVideoNote", params);
@@ -421,8 +437,9 @@ export function registerMessageSendTools(server) {
       disable_notification: z.boolean().optional().describe("Send silently without notification"),
       protect_content: z.boolean().optional().describe("Protect messages from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, media, message_thread_id, disable_notification, protect_content, reply_parameters }) => {
+    async ({ chat_id, media, message_thread_id, disable_notification, protect_content, reply_parameters, message_effect_id }) => {
       try {
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
         const params = { chat_id: resolveChatId(chat_id), media: parseJSON(media) };
@@ -430,6 +447,7 @@ export function registerMessageSendTools(server) {
         if (disable_notification) params.disable_notification = true;
         if (protect_content) params.protect_content = true;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendMediaGroup", params);
         const msgIds = result.map((m) => m.message_id).join(", ");
         return ok(`Media group sent! Message IDs: [${msgIds}]\n\n${formatResult(result)}`);
@@ -458,8 +476,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, latitude, longitude, horizontal_accuracy, live_period, heading, proximity_alert_radius, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, latitude, longitude, horizontal_accuracy, live_period, heading, proximity_alert_radius, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
         const params = { chat_id: resolveChatId(chat_id), latitude, longitude };
@@ -472,6 +491,7 @@ export function registerMessageSendTools(server) {
         if (protect_content) params.protect_content = true;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendLocation", params);
         return ok(`Location sent! ID: ${result.message_id}\n\n${formatResult(result)}`);
       } catch (e) {
@@ -501,8 +521,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, latitude, longitude, title, address, foursquare_id, foursquare_type, google_place_id, google_place_type, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, latitude, longitude, title, address, foursquare_id, foursquare_type, google_place_id, google_place_type, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
         const params = { chat_id: resolveChatId(chat_id), latitude, longitude, title, address };
@@ -515,6 +536,7 @@ export function registerMessageSendTools(server) {
         if (protect_content) params.protect_content = true;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendVenue", params);
         return ok(`Venue sent! ID: ${result.message_id}\n\n${formatResult(result)}`);
       } catch (e) {
@@ -540,8 +562,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, phone_number, first_name, last_name, vcard, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, phone_number, first_name, last_name, vcard, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
         const params = { chat_id: resolveChatId(chat_id), phone_number, first_name };
@@ -552,6 +575,7 @@ export function registerMessageSendTools(server) {
         if (protect_content) params.protect_content = true;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendContact", params);
         const contactName = last_name ? `${first_name} ${last_name}` : first_name;
         return ok(`Contact sent! ${contactName}: ${phone_number}\nMessage ID: ${result.message_id}\n\n${formatResult(result)}`);
@@ -591,8 +615,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, question, question_parse_mode, question_entities, options, is_anonymous, type, allows_multiple_answers, correct_option_id, explanation, explanation_parse_mode, explanation_entities, open_period, close_date, is_closed, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, question, question_parse_mode, question_entities, options, is_anonymous, type, allows_multiple_answers, correct_option_id, explanation, explanation_parse_mode, explanation_entities, open_period, close_date, is_closed, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
         const params = { chat_id: resolveChatId(chat_id), question, options: parseJSON(options) };
@@ -613,6 +638,7 @@ export function registerMessageSendTools(server) {
         if (protect_content) params.protect_content = true;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendPoll", params);
         return ok(`Poll sent! ID: ${result.message_id}\n\n${formatResult(result)}`);
       } catch (e) {
@@ -636,8 +662,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, emoji, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, emoji, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
         const params = { chat_id: resolveChatId(chat_id) };
@@ -647,6 +674,7 @@ export function registerMessageSendTools(server) {
         if (protect_content) params.protect_content = true;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendDice", params);
         return ok(`Dice rolled! ${result.dice.emoji} → ${result.dice.value}\nMessage ID: ${result.message_id}\n\n${formatResult(result)}`);
       } catch (e) {
@@ -670,8 +698,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with reply markup (inline keyboard, custom keyboard, etc.)"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, sticker, message_thread_id, emoji, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, sticker, message_thread_id, emoji, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolved = resolveChatId(chat_id);
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
@@ -686,6 +715,7 @@ export function registerMessageSendTools(server) {
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
 
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = isFile
           ? await tgUpload("sendSticker", sticker, "sticker", params)
           : await tgCall("sendSticker", params);
@@ -751,8 +781,9 @@ export function registerMessageSendTools(server) {
       protect_content: z.boolean().optional().describe("Protect from forwarding"),
       message_thread_id: z.number().optional().describe("Topic/thread ID"),
       reply_parameters: z.string().optional().describe("JSON ReplyParameters object"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, checklist, disable_notification, protect_content, message_thread_id, reply_parameters }) => {
+    async ({ chat_id, checklist, disable_notification, protect_content, message_thread_id, reply_parameters, message_effect_id }) => {
       try {
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
         const params = {
@@ -763,6 +794,7 @@ export function registerMessageSendTools(server) {
         if (protect_content) params.protect_content = true;
         if (resolvedThreadId) params.message_thread_id = resolvedThreadId;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendChecklist", params);
         return ok(`Checklist sent.\n\n${formatResult(result)}`);
       } catch (e) {

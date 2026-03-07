@@ -36,8 +36,9 @@ export function registerPaymentTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with inline keyboard markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, title, description, payload, currency, prices, provider_token, max_tip_amount, suggested_tip_amounts, start_parameter, photo_url, photo_size, photo_width, photo_height, need_name, need_phone_number, need_email, need_shipping_address, send_phone_number_to_provider, send_email_to_provider, is_flexible, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, title, description, payload, currency, prices, provider_token, max_tip_amount, suggested_tip_amounts, start_parameter, photo_url, photo_size, photo_width, photo_height, need_name, need_phone_number, need_email, need_shipping_address, send_phone_number_to_provider, send_email_to_provider, is_flexible, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolved_chat_id = resolveChatId(chat_id);
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
@@ -69,6 +70,7 @@ export function registerPaymentTools(server) {
         if (protect_content) params.protect_content = true;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendInvoice", params);
         return ok(`Invoice sent.\n\n${formatResult(result)}`);
       } catch (e) {

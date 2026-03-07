@@ -17,8 +17,9 @@ export function registerGameTools(server) {
       protect_content: z.boolean().optional().describe("Protect message from forwarding/saving"),
       reply_parameters: z.string().optional().describe("JSON object with ReplyParameters (e.g. {\"message_id\": 123})"),
       reply_markup: z.string().optional().describe("JSON string with inline keyboard markup"),
+      message_effect_id: z.string().optional().describe("Unique identifier of the message effect to apply"),
     },
-    async ({ chat_id, game_short_name, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup }) => {
+    async ({ chat_id, game_short_name, message_thread_id, disable_notification, protect_content, reply_parameters, reply_markup, message_effect_id }) => {
       try {
         const resolved_chat_id = resolveChatId(chat_id);
         const resolvedThreadId = resolveThreadId(chat_id, message_thread_id);
@@ -28,6 +29,7 @@ export function registerGameTools(server) {
         if (protect_content) params.protect_content = true;
         if (reply_parameters) params.reply_parameters = parseJSON(reply_parameters);
         if (reply_markup) params.reply_markup = parseJSON(reply_markup);
+        if (message_effect_id) params.message_effect_id = message_effect_id;
         const result = await tgCall("sendGame", params);
         return ok(`Game sent.\n\n${formatResult(result)}`);
       } catch (e) {
