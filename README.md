@@ -7,6 +7,10 @@ Full-featured Telegram Bot API server for MCP (Model Context Protocol).
   <img width="380" height="200" src="https://glama.ai/mcp/servers/@FantomaSkaRus1/telegram-bot-mcp/badge" alt="telegram-bot-mcp MCP server" />
 </a>
 
+## Hosted deployment
+
+A hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/fantomaskarus1-telegram-bot-mcp).
+
 ## Features
 
 - **Messages** — send (text, photo, video, audio, document, location, poll, dice, sticker, media groups), edit, forward, copy, delete, pin/unpin, reactions
